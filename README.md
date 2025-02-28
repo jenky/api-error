@@ -51,7 +51,7 @@ The MIT License (MIT). Please see [License File](LICENSE.md) for more informatio
 [ico-downloads]: https://img.shields.io/packagist/dt/jenky/api-error.svg?style=for-the-badge
 
 [link-packagist]: https://packagist.org/packages/jenky/api-error
-[link-gh-actions]: https://github.com/jenky/jenky/api-error
+[link-gh-actions]: https://github.com/jenky/api-error
 [link-codecov]: https://codecov.io/gh/jenky/api-error
 [link-downloads]: https://packagist.org/packages/jenky/api-error
 

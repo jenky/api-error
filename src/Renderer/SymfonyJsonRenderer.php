@@ -33,22 +33,16 @@ final class SymfonyJsonRenderer
             return null;
         }
 
-        $data = $problem->toArray();
-
-        if ($this->debug && $problem instanceof DebuggableProblem) {
-            $debug = $problem->toDebugArray();
-
-            if (\count($debug) > 0) {
-                $data['debug'] = $debug;
-            }
-        }
+        $data = $this->debug && $problem instanceof DebuggableProblem
+            ? $problem->toDebugRepresentation()
+            : $problem->toRepresentation();
 
         $status = 500;
         $headers = [];
 
         if ($problem instanceof HttpProblem) {
-            $status = $problem->statusCode();
-            $headers = $problem->headers();
+            $status = $problem->getStatusCode();
+            $headers = $problem->getHeaders();
         }
 
         return new JsonResponse(

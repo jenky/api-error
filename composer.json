@@ -2,7 +2,6 @@
     "name": "jenky/api-error",
     "description": "This is my package api-error",
     "keywords": [
-        "jenky",
         "api-error"
     ],
     "homepage": "https://github.com/jenky/api-error",
@@ -10,7 +9,7 @@
     "authors": [
         {
             "name": "Lynh",
-            "email": "author@domain.com",
+            "email": "contact@lynh.me",
             "role": "Developer"
         }
     ],

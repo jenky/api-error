@@ -17,7 +17,7 @@ final class RendererTest extends TestCase
         $request = Request::create('/', server: ['HTTP_ACCEPT' => 'application/json']);
         $renderer = new SymfonyJsonRenderer();
 
-        $response = $renderer->render(new GenericProblem(new \RuntimeException('noop')), $request);
+        $response = $renderer->render(GenericProblem::createFromThrowable(new \RuntimeException('noop')), $request);
         $error = [
             'message' => 'noop',
             'status' => 500,
@@ -33,7 +33,7 @@ final class RendererTest extends TestCase
         $request = Request::create('/', server: ['HTTP_ACCEPT' => 'application/json']);
         $renderer = new SymfonyJsonRenderer(true, 'application/debug_problem+json');
 
-        $response = $renderer->render(new GenericProblem(new \RuntimeException('noop')), $request);
+        $response = $renderer->render(GenericProblem::createFromThrowable(new \RuntimeException('noop')), $request);
         $error = [
             'message' => 'noop',
             'status' => 500,
@@ -52,7 +52,7 @@ final class RendererTest extends TestCase
         $request = Request::create('/');
         $renderer = new SymfonyJsonRenderer();
 
-        $response = $renderer->render(new GenericProblem(new \RuntimeException('noop')), $request);
+        $response = $renderer->render(GenericProblem::createFromThrowable(new \RuntimeException('noop')), $request);
 
         $this->assertNull($response);
     }

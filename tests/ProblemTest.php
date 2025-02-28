@@ -16,11 +16,11 @@ final class ProblemTest extends TestCase
     #[DataProvider('provideGenericProblemExceptions')]
     public function test_generic_problem(\Throwable $e, int $status, array $data): void
     {
-        $problem = new GenericProblem($e);
+        $problem = GenericProblem::createFromThrowable($e);
 
-        $this->assertSame($status, $problem->statusCode());
-        $this->assertEquals($data, $problem->toArray());
-        $this->assertArrayHasKey('line', $problem->toDebugArray());
+        $this->assertSame($status, $problem->getStatusCode());
+        $this->assertEquals($data, $problem->toRepresentation());
+        $this->assertArrayHasKey('debug', $problem->toDebugRepresentation());
     }
 
     public static function provideGenericProblemExceptions(): iterable
@@ -59,11 +59,11 @@ final class ProblemTest extends TestCase
     #[DataProvider('provideRfc7807ProblemExceptions')]
     public function test_rfc7870_problem(\Throwable $e, int $status, array $data): void
     {
-        $problem = new Rfc7807Problem($e);
+        $problem = Rfc7807Problem::createFromThrowable($e);
 
-        $this->assertSame($status, $problem->statusCode());
-        $this->assertEquals($data, $problem->toArray());
-        $this->assertArrayHasKey('line', $problem->toDebugArray());
+        $this->assertSame($status, $problem->getStatusCode());
+        $this->assertEquals($data, $problem->toRepresentation());
+        $this->assertArrayHasKey('debug', $problem->toDebugRepresentation());
     }
 
     public static function provideRfc7807ProblemExceptions(): iterable

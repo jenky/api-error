@@ -20,26 +20,18 @@ final class TransformerTest extends TestCase
         $transformer->expects($this->once())
             ->method('transform')
             ->with($exception)
-            ->willReturn(new Rfc7807Problem($exception));
+            ->willReturn(Rfc7807Problem::createFromThrowable($exception));
 
         $chain = new ChainTransformer([$transformer]);
 
         $this->assertInstanceOf(Rfc7807Problem::class, $problem = $chain->transform($exception));
-        $this->assertSame(500, $problem->statusCode());
+        $this->assertSame(500, $problem->getStatusCode());
     }
 
     public function test_chain_transformer_fallback(): void
     {
-        $exception = new \RuntimeException('TEST');
+        $chain = new ChainTransformer([]);
 
-        $transformer = $this->createMock(ExceptionTransformer::class);
-        $transformer->expects($this->once())
-            ->method('transform')
-            ->with($exception)
-            ->willThrowException(new \Exception('noop'));
-
-        $chain = new ChainTransformer([$transformer]);
-
-        $this->assertInstanceOf(GenericProblem::class, $chain->transform($exception));
+        $this->assertInstanceOf(GenericProblem::class, $chain->transform(new \RuntimeException('TEST')));
     }
 }

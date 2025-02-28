@@ -27,6 +27,6 @@ final class ChainTransformer implements ExceptionTransformer
             }
         }
 
-        return new GenericProblem($exception);
+        return GenericProblem::createFromThrowable($exception);
     }
 }

@@ -9,12 +9,12 @@ interface HttpProblem
     /**
      * Returns the status code.
      */
-    public function statusCode(): int;
+    public function getStatusCode(): int;
 
     /**
      * Returns response headers.
      *
      * @return array<string, mixed>
      */
-    public function headers(): array;
+    public function getHeaders(): array;
 }

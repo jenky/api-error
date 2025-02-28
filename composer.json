@@ -1,0 +1,66 @@
+{
+    "name": "jenky/api-error",
+    "description": "This is my package api-error",
+    "keywords": [
+        "jenky",
+        "api-error"
+    ],
+    "homepage": "https://github.com/jenky/api-error",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Lynh",
+            "email": "author@domain.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.1",
+        "symfony/error-handler": "^6.1|^7.0"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.10",
+        "phpstan/phpstan": "^2.0",
+        "phpunit/phpunit": "^10.0",
+        "symfony/http-foundation": "^6.1|^7.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Jenky\\ApiError\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Jenky\\ApiError\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "analyse": [
+            "vendor/bin/phpstan analyse"
+        ],
+        "cs": [
+            "vendor/bin/php-cs-fixer fix"
+        ],
+        "test": [
+            "vendor/bin/phpunit"
+        ],
+        "coverage": [
+            "vendor/bin/phpunit --coverage"
+        ],
+        "check": [
+            "@cs --dry-run",
+            "@analyse",
+            "@test"
+        ]
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-main": "1.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

@@ -7,7 +7,9 @@ namespace Jenky\ApiError;
 interface DebuggableProblem extends Problem
 {
     /**
-     * Get the debug representation of the object.
+     * Get the debug context of the object.
+     *
+     * @return array<string, mixed>
      */
-    public function toDebugRepresentation(): mixed;
+    public function debugContext(): array;
 }

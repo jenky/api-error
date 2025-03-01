@@ -11,21 +11,23 @@ class GenericProblem extends FlattenException implements DebuggableProblem, Http
     /**
      * @return array<string, mixed>
      */
-    public function toRepresentation(): array
+    public function context(): array
     {
         return [
-            'message' => $this->getMessage() ?: $this->getStatusText(),
+            'message' => $this->getMessage(),
+            'title' => $this->getMessage() ?: $this->getStatusText(),
             'code' => $this->getCode(),
-            'status' => $this->getStatusCode(),
+            'status_code' => $this->getStatusCode(),
+            'status_text' => $this->getStatusText(),
         ];
     }
 
     /**
      * @return array<string, mixed>
      */
-    public function toDebugRepresentation(): array
+    public function debugContext(): array
     {
-        $data = $this->toRepresentation();
+        $data = $this->context();
 
         $data['debug'] = [
             'line' => $this->getLine(),

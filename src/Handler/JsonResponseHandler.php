@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Jenky\ApiError\Renderer;
+namespace Jenky\ApiError\Handler;
 
-use Jenky\ApiError\DebuggableProblem;
+use Jenky\ApiError\Formatter\ErrorFormatter;
 use Jenky\ApiError\HttpProblem;
 use Jenky\ApiError\Problem;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -15,11 +15,10 @@ if (! class_exists(Request::class) || ! class_exists(Response::class)) {
     throw new \LogicException('You cannot use the "Jenky\ApiError\Renderer\SymfonyJsonRenderer" as the "symfony/http-foundation" package is not installed. Try running "composer require symfony/http-foundation".');
 }
 
-final class SymfonyJsonRenderer
+final class JsonResponseHandler
 {
     public function __construct(
-        // Enable debug mode will append the debug param to the JSON response.
-        private readonly bool $debug = false,
+        private readonly ErrorFormatter $formatter,
         private readonly string $contentType = 'application/problem+json',
     ) {
     }
@@ -33,10 +32,6 @@ final class SymfonyJsonRenderer
             return null;
         }
 
-        $data = $this->debug && $problem instanceof DebuggableProblem
-            ? $problem->toDebugRepresentation()
-            : $problem->toRepresentation();
-
         $status = 500;
         $headers = [];
 
@@ -46,7 +41,7 @@ final class SymfonyJsonRenderer
         }
 
         return new JsonResponse(
-            $data,
+            $this->formatter->format($problem),
             $status,
             \array_merge(['Content-Type' => $this->contentType], $headers)
         );

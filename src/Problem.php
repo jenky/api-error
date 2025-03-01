@@ -7,7 +7,9 @@ namespace Jenky\ApiError;
 interface Problem
 {
     /**
-     * Get the data representation of the object.
+     * Get the context the object.
+     *
+     * @return array<string, mixed>
      */
-    public function toRepresentation(): mixed;
+    public function context(): array;
 }

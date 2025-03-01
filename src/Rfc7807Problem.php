@@ -42,14 +42,11 @@ final class Rfc7807Problem extends GenericProblem
     /**
      * @return array<string, mixed>
      */
-    public function toRepresentation(): array
+    public function context(): array
     {
-        return array_filter([
+        return \array_merge(parent::context(), [
             'type' => $this->type,
-            'title' => $this->getStatusText(),
-            'detail' => $this->getMessage(),
-            'status' => $this->getStatusCode(),
-            'invalid-params' => $this->invalidParams,
+            'invalid_params' => $this->invalidParams,
         ]);
     }
 }

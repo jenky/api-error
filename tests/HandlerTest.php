@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Jenky\ApiError\Tests;
 
 use Jenky\ApiError\Formatter\GenericErrorFormatter;
-use Jenky\ApiError\GenericProblem;
 use Jenky\ApiError\Handler\JsonResponseHandler;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -18,7 +17,7 @@ final class HandlerTest extends TestCase
         $request = Request::create('/', server: ['HTTP_ACCEPT' => 'application/json']);
         $renderer = new JsonResponseHandler(new GenericErrorFormatter());
 
-        $response = $renderer->render(GenericProblem::createFromThrowable(new \RuntimeException('noop')), $request);
+        $response = $renderer->render(new \RuntimeException('noop'), $request);
 
         $this->assertInstanceOf(JsonResponse::class, $response);
         $this->assertJson($content = $response->getContent());
@@ -35,7 +34,7 @@ final class HandlerTest extends TestCase
         $request = Request::create('/', server: ['HTTP_ACCEPT' => 'application/json']);
         $renderer = new JsonResponseHandler(new GenericErrorFormatter(true), 'application/debug_problem+json');
 
-        $response = $renderer->render(GenericProblem::createFromThrowable(new \RuntimeException('noop')), $request);
+        $response = $renderer->render(new \RuntimeException('noop'), $request);
 
         $this->assertInstanceOf(JsonResponse::class, $response);
         $this->assertJson($content = $response->getContent());
@@ -54,7 +53,7 @@ final class HandlerTest extends TestCase
         $request = Request::create('/');
         $renderer = new JsonResponseHandler(new GenericErrorFormatter());
 
-        $response = $renderer->render(GenericProblem::createFromThrowable(new \RuntimeException('noop')), $request);
+        $response = $renderer->render(new \RuntimeException('noop'), $request);
 
         $this->assertNull($response);
     }

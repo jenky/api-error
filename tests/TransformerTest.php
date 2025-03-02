@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Jenky\ApiError\Tests;
 
-use Jenky\ApiError\GenericProblem;
+use Jenky\ApiError\Exception\TransformerException;
 use Jenky\ApiError\Rfc7807Problem;
 use Jenky\ApiError\Transformer\ChainTransformer;
 use Jenky\ApiError\Transformer\ExceptionTransformer;
@@ -32,6 +32,8 @@ final class TransformerTest extends TestCase
     {
         $chain = new ChainTransformer([]);
 
-        $this->assertInstanceOf(GenericProblem::class, $chain->transform(new \RuntimeException('TEST')));
+        $this->expectException(TransformerException::class);
+
+        $chain->transform(new \RuntimeException('TEST'));
     }
 }

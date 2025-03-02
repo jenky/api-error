@@ -6,8 +6,6 @@ namespace Jenky\ApiError\Tests;
 
 use Jenky\ApiError\Formatter\GenericErrorFormatter;
 use Jenky\ApiError\Formatter\Rfc7807ErrorFormatter;
-use Jenky\ApiError\GenericProblem;
-use Jenky\ApiError\Rfc7807Problem;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
@@ -16,10 +14,9 @@ final class ErrorFormatterTest extends TestCase
     #[DataProvider('provideExceptions')]
     public function test_generic_error_formatter(\Throwable $exception, bool $debug): void
     {
-        $problem = GenericProblem::createFromThrowable($exception);
         $formatter = new GenericErrorFormatter($debug);
 
-        $data = $formatter->format($problem);
+        $data = $formatter->format($exception);
 
         $this->assertIsArray($data);
         $this->assertArrayHasKey('message', $data);
@@ -40,10 +37,9 @@ final class ErrorFormatterTest extends TestCase
     #[DataProvider('provideExceptions')]
     public function test_rfc7808_error_formatter(\Throwable $exception, bool $debug): void
     {
-        $problem = Rfc7807Problem::createFromThrowable($exception);
         $formatter = new Rfc7807ErrorFormatter($debug);
 
-        $data = $formatter->format($problem);
+        $data = $formatter->format($exception);
 
         $this->assertIsArray($data);
         $this->assertArrayHasKey('type', $data);

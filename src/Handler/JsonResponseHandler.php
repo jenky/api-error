@@ -5,11 +5,10 @@ declare(strict_types=1);
 namespace Jenky\ApiError\Handler;
 
 use Jenky\ApiError\Formatter\ErrorFormatter;
-use Jenky\ApiError\HttpProblem;
-use Jenky\ApiError\Problem;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 
 if (! class_exists(Request::class) || ! class_exists(Response::class)) {
     throw new \LogicException('You cannot use the "Jenky\ApiError\Renderer\SymfonyJsonRenderer" as the "symfony/http-foundation" package is not installed. Try running "composer require symfony/http-foundation".');
@@ -26,7 +25,7 @@ final class JsonResponseHandler
     /**
      * Render a HTTP response for given problem.
      */
-    public function render(Problem $problem, Request $request): ?Response
+    public function render(\Throwable $exception, Request $request): ?Response
     {
         if (! $this->expectsJson($request)) {
             return null;
@@ -35,13 +34,13 @@ final class JsonResponseHandler
         $status = 500;
         $headers = [];
 
-        if ($problem instanceof HttpProblem) {
-            $status = $problem->getStatusCode();
-            $headers = $problem->getHeaders();
+        if ($exception instanceof HttpExceptionInterface) {
+            $status = $exception->getStatusCode();
+            $headers = $exception->getHeaders();
         }
 
         return new JsonResponse(
-            $this->formatter->format($problem),
+            $this->formatter->format($exception),
             $status,
             \array_merge(['Content-Type' => $this->contentType], $headers)
         );

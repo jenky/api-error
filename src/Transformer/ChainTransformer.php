@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Jenky\ApiError\Transformer;
 
-use Jenky\ApiError\GenericProblem;
+use Jenky\ApiError\Exception\TransformerException;
 use Jenky\ApiError\Problem;
 
 final class ChainTransformer implements ExceptionTransformer
@@ -27,6 +27,6 @@ final class ChainTransformer implements ExceptionTransformer
             }
         }
 
-        return GenericProblem::createFromThrowable($exception);
+        throw new TransformerException(sprintf('Unable to transform given exception %s', get_debug_type($exception)));
     }
 }

@@ -4,12 +4,20 @@ declare(strict_types=1);
 
 namespace Jenky\ApiError\Formatter;
 
+use Jenky\ApiError\GenericProblem;
+use Jenky\ApiError\Problem;
+
 /**
  * @extends AbstractErrorFormatter<string>
  */
 final class GenericErrorFormatter extends AbstractErrorFormatter
 {
-    public function __construct(bool $debug = false)
+    protected function createProblem(\Throwable $exception): Problem
+    {
+        return GenericProblem::createFromThrowable($exception);
+    }
+
+    protected function getFormat(): array
     {
         $format = [
             'message' => '{title}',
@@ -17,10 +25,10 @@ final class GenericErrorFormatter extends AbstractErrorFormatter
             'code' => '{code}',
         ];
 
-        if ($debug) {
+        if ($this->debug) {
             $format['debug'] = '{debug}';
         }
 
-        parent::__construct($format);
+        return $format;
     }
 }

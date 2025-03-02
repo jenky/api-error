@@ -6,26 +6,43 @@ namespace Jenky\ApiError\Formatter;
 
 use Jenky\ApiError\DebuggableProblem;
 use Jenky\ApiError\Problem;
+use Jenky\ApiError\Transformer\ExceptionTransformer;
 
 /**
  * @template T of array-key
  */
 abstract class AbstractErrorFormatter implements ErrorFormatter
 {
-    /**
-     * @param  array<T, mixed> $format
-     */
     public function __construct(
-        private readonly array $format,
+        protected readonly bool $debug = false,
+        protected readonly ?ExceptionTransformer $transformer = null,
     ) {
     }
 
     /**
+     * @return array<T, mixed> $format
+     */
+    abstract protected function getFormat(): array;
+
+    abstract protected function createProblem(\Throwable $exception): Problem;
+
+    /**
      * @return array<T, mixed>
      */
-    public function format(Problem $problem): array
+    public function format(\Throwable $exception): array
     {
-        $format = $this->format;
+        $format = $this->getFormat();
+
+        if ($this->transformer !== null) {
+            try {
+                $problem = $this->transformer->transform($exception);
+            } catch (\Throwable) {
+                $problem = $this->createProblem($exception);
+            }
+        } else {
+            $problem = $this->createProblem($exception);
+        }
+
         $context = $problem instanceof DebuggableProblem
             ? $problem->debugContext()
             : $problem->context();

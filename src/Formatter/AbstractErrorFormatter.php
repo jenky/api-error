@@ -43,7 +43,7 @@ abstract class AbstractErrorFormatter implements ErrorFormatter
             $problem = $this->createProblem($exception);
         }
 
-        $context = $problem instanceof DebuggableProblem
+        $context = $this->debug && $problem instanceof DebuggableProblem
             ? $problem->debugContext()
             : $problem->context();
 

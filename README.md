@@ -1,5 +1,5 @@
 
-# This is my package api-error
+# Api Error
 
 [![Latest Version on Packagist][ico-version]][link-packagist]
 [![Github Actions][ico-gh-actions]][link-gh-actions]
@@ -7,14 +7,39 @@
 [![Total Downloads][ico-downloads]][link-downloads]
 [![Software License][ico-license]](LICENSE.md)
 
-This is where your description should go. Try and limit it to a paragraph or two. Consider adding a small example.
+This package provides an implementation for API error formatting. It can be integrated throughout your code and should result in a standardized error response format for HTTP APIs.
 
-## Installation
+Since handling the exceptions is up to the framework, here are a list of supported integrations:
+
+## Symfony Foundation Based Framework
+- [Symfony](https://github.com/jenky/api-error-bundle)
+- [Laravel](https://github.com/jenky/hades)
+
+## Bring Your Own
 
 You can install the package via composer:
 
 ```bash
 composer require jenky/api-error
+```
+
+The usage may vary depending on your project. Typically, you should handle it in your global exception handler. Here is a minimal example:
+
+```php
+use Jenky\ApiError\Formatter\GenericErrorFormatter;
+use Jenky\ApiError\Transformer\ChainTransformer;
+
+
+$transformer = new ChainTransformer([
+    // ... list of transformers
+])
+$formatter = new GenericErrorFormatter(true, $transformer);
+
+// or simply without transformer and debug is off
+$formatter = new GenericErrorFormatter();
+
+/** @var \Throwable $exception */
+return \json_encode($formatter->format($exception));
 ```
 
 ## Testing
@@ -33,7 +58,7 @@ Please see [CONTRIBUTING](CONTRIBUTING.md) and [CODE_OF_CONDUCT](CODE_OF_CONDUCT
 
 ## Security
 
-If you discover any security related issues, please email jenky.w0w@gmail.com instead of using the issue tracker.
+If you discover any security related issues, please email contact@lynh.me instead of using the issue tracker.
 
 ## Credits
 

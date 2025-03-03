@@ -14,7 +14,7 @@ if (! class_exists(Request::class) || ! class_exists(Response::class)) {
     throw new \LogicException('You cannot use the "Jenky\ApiError\Handler\Symfony\JsonResponseHandler" as the "symfony/http-foundation" package is not installed. Try running "composer require symfony/http-foundation".');
 }
 
-final class JsonResponseHandler
+final class JsonResponseHandler implements ResponseHandler
 {
     public function __construct(
         private readonly ErrorFormatter $formatter,

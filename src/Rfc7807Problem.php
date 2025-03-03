@@ -44,9 +44,14 @@ final class Rfc7807Problem extends GenericProblem
      */
     public function context(): array
     {
-        return \array_merge(parent::context(), [
+        $context = [
             'type' => $this->type,
-            'invalid_params' => $this->invalidParams,
-        ]);
+        ];
+
+        if (\count($this->invalidParams) > 0) {
+            $context['invalid_params'] = $this->invalidParams;
+        }
+
+        return \array_merge(parent::context(), $context);
     }
 }

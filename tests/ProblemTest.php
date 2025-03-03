@@ -84,7 +84,6 @@ final class ProblemTest extends TestCase
                 'status_code' => 500,
                 'status_text' => Response::$statusTexts[500],
                 'type' => 'about:blank',
-                'invalid_params' => [],
             ],
         ];
 
@@ -98,7 +97,6 @@ final class ProblemTest extends TestCase
                 'status_code' => 400,
                 'status_text' => Response::$statusTexts[400],
                 'type' => 'about:blank',
-                'invalid_params' => [],
             ],
         ];
     }

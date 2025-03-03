@@ -56,10 +56,6 @@ final class Rfc7807Problem extends GenericProblem
             $context['invalid_params'] = $this->invalidParams;
         }
 
-        if ($message = $this->getMessage()) {
-            $context['detail'] = $message;
-        }
-
         return \array_merge(parent::context(), $context);
     }
 }

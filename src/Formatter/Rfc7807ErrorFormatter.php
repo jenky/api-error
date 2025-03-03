@@ -22,7 +22,7 @@ final class Rfc7807ErrorFormatter extends AbstractErrorFormatter
         $format = [
             'type' => '{type}',
             'title' => '{status_text}',
-            'detail' => '{detail}',
+            'detail' => '{message}',
             'status' => '{status_code}',
             'invalid-params' => '{invalid_params}',
         ];

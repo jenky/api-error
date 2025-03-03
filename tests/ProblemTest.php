@@ -80,7 +80,6 @@ final class ProblemTest extends TestCase
             [
                 'message' => 'This is a runtime exception',
                 'title' => 'This is a runtime exception',
-                'detail' => 'This is a runtime exception',
                 'code' => 0,
                 'status_code' => 500,
                 'status_text' => Response::$statusTexts[500],

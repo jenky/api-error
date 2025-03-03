@@ -6,7 +6,7 @@ namespace Jenky\ApiError;
 
 use Symfony\Component\ErrorHandler\Exception\FlattenException;
 
-class GenericProblem extends FlattenException implements DebuggableProblem, HttpProblem
+class GenericProblem extends FlattenException implements DebuggableProblem
 {
     /**
      * @return array<string, mixed>

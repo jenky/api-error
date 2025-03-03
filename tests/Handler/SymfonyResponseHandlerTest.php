@@ -20,13 +20,9 @@ final class SymfonyResponseHandlerTest extends TestCase
         $response = $renderer->render(new \RuntimeException('noop'), $request);
 
         $this->assertInstanceOf(JsonResponse::class, $response);
-        $this->assertJson($content = $response->getContent());
+        $this->assertJson($response->getContent());
         $this->assertSame('application/problem+json', $response->headers->get('Content-Type'));
-
-        $data = \json_decode($content, true);
-
-        $this->assertSame('noop', $data['message'] ?? null);
-        $this->assertSame(500, $data['status'] ?? null);
+        $this->assertSame(500, $response->getStatusCode());
     }
 
     public function test_symfony_json_renderer_with_debug(): void
@@ -43,7 +39,7 @@ final class SymfonyResponseHandlerTest extends TestCase
         $data = \json_decode($content, true);
 
         $this->assertSame('noop', $data['message'] ?? null);
-        $this->assertSame(500, $data['status'] ?? null);
+        $this->assertSame(500, $response->getStatusCode());
         $this->assertArrayHasKey('debug', $data);
         $this->assertSame(\RuntimeException::class, $data['debug']['class'] ?? null);
     }

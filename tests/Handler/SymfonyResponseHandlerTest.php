@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Jenky\ApiError\Tests;
+namespace Jenky\ApiError\Tests\Handler;
 
 use Jenky\ApiError\Formatter\GenericErrorFormatter;
-use Jenky\ApiError\Handler\JsonResponseHandler;
+use Jenky\ApiError\Handler\Symfony\JsonResponseHandler;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
-final class HandlerTest extends TestCase
+final class SymfonyResponseHandlerTest extends TestCase
 {
     public function test_symfony_json_renderer(): void
     {

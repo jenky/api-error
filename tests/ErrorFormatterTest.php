@@ -44,7 +44,6 @@ final class ErrorFormatterTest extends TestCase
         $this->assertIsArray($data);
         $this->assertArrayHasKey('type', $data);
         $this->assertArrayHasKey('title', $data);
-        $this->assertArrayHasKey('detail', $data);
         $this->assertArrayHasKey('status', $data);
 
         if ($debug) {
@@ -53,9 +52,13 @@ final class ErrorFormatterTest extends TestCase
             $this->assertArrayNotHasKey('debug', $data);
         }
 
+        if ($exception->getMessage()) {
+            $this->assertArrayHasKey('detail', $data);
+            $this->assertSame($data['detail'], $exception->getMessage());
+        }
+
         $this->assertSame($data['type'], 'about:blank');
         $this->assertSame($data['title'], 'Internal Server Error');
-        $this->assertSame($data['detail'], $exception->getMessage());
         $this->assertSame($data['status'], 500);
     }
 

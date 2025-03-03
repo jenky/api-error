@@ -15,6 +15,10 @@ final class Rfc7807Problem extends GenericProblem
 
     public function setType(string $type): static
     {
+        if (\filter_var($type, \FILTER_VALIDATE_URL) === false) {
+            throw new \InvalidArgumentException(sprintf('Type should be a valid URL. `%s` given', $type));
+        }
+
         $this->type = $type;
 
         return $this;
@@ -50,6 +54,10 @@ final class Rfc7807Problem extends GenericProblem
 
         if (\count($this->invalidParams) > 0) {
             $context['invalid_params'] = $this->invalidParams;
+        }
+
+        if ($message = $this->getMessage()) {
+            $context['detail'] = $message;
         }
 
         return \array_merge(parent::context(), $context);

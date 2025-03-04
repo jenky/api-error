@@ -29,8 +29,6 @@ abstract class AbstractErrorFormatter implements ErrorFormatter
 
     public function format(\Throwable $exception): HttpError
     {
-        $format = $this->getFormat();
-
         if ($this->transformer !== null) {
             try {
                 $problem = $this->transformer->transform($exception);

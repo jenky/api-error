@@ -9,17 +9,29 @@ use Symfony\Component\ErrorHandler\Exception\FlattenException;
 class GenericProblem extends FlattenException implements DebuggableProblem
 {
     /**
+     * @var array<string, mixed>
+     */
+    private array $context = [];
+
+    public function set(string $key, mixed $value): self
+    {
+        $this->context[$key] = $value;
+
+        return $this;
+    }
+
+    /**
      * @return array<string, mixed>
      */
     public function context(): array
     {
-        return [
+        return \array_merge($this->context, [
             'message' => $this->getMessage(),
             'title' => $this->getMessage() ?: $this->getStatusText(),
             'code' => $this->getCode(),
             'status_code' => $this->getStatusCode(),
             'status_text' => $this->getStatusText(),
-        ];
+        ]);
     }
 
     /**

@@ -7,9 +7,6 @@ namespace Jenky\ApiError\Formatter;
 use Jenky\ApiError\Problem;
 use Jenky\ApiError\Rfc7807Problem;
 
-/**
- * @extends AbstractErrorFormatter<string>
- */
 final class Rfc7807ErrorFormatter extends AbstractErrorFormatter
 {
     protected function createProblem(\Throwable $exception): Problem

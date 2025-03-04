@@ -5,12 +5,11 @@ declare(strict_types=1);
 namespace Jenky\ApiError\Formatter;
 
 use Jenky\ApiError\DebuggableProblem;
+use Jenky\ApiError\HttpError;
 use Jenky\ApiError\Problem;
 use Jenky\ApiError\Transformer\ExceptionTransformer;
+use Symfony\Component\ErrorHandler\Exception\FlattenException;
 
-/**
- * @template T of array-key
- */
 abstract class AbstractErrorFormatter implements ErrorFormatter
 {
     public function __construct(
@@ -20,16 +19,13 @@ abstract class AbstractErrorFormatter implements ErrorFormatter
     }
 
     /**
-     * @return array<T, mixed> $format
+     * @return array<string, mixed> $format
      */
     abstract protected function getFormat(): array;
 
     abstract protected function createProblem(\Throwable $exception): Problem;
 
-    /**
-     * @return array<T, mixed>
-     */
-    public function format(\Throwable $exception): array
+    public function format(\Throwable $exception): HttpError
     {
         $format = $this->getFormat();
 
@@ -47,9 +43,17 @@ abstract class AbstractErrorFormatter implements ErrorFormatter
             ? $problem->debugContext()
             : $problem->context();
 
+        $status = 500;
+        $headers = [];
+
+        if ($problem instanceof FlattenException) {
+            $status = $problem->getStatusCode();
+            $headers = $problem->getHeaders();
+        }
+
         \array_walk_recursive($format, $this->replacePlaceHolder(...), $context);
 
-        return $this->removeEmptyPlaceHolders($format);
+        return new HttpError($this->removeEmptyPlaceHolders($format), $status, $headers);
     }
 
     /**
@@ -92,7 +96,7 @@ abstract class AbstractErrorFormatter implements ErrorFormatter
     /**
      * @param  array<array-key, mixed> $input
      *
-     * @return array<T, mixed>
+     * @return array<string, mixed>
      */
     private function removeEmptyPlaceHolders(array $input): array
     {

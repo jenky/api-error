@@ -23,7 +23,7 @@
         "friendsofphp/php-cs-fixer": "^3.10",
         "phpstan/phpstan": "^2.0",
         "phpunit/phpunit": "^10.0",
-        "symfony/http-kernel": "^6.1|^7.2"
+        "symfony/http-foundation": "^6.1|^7.2"
     },
     "autoload": {
         "psr-4": {

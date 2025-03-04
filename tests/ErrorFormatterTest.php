@@ -16,7 +16,7 @@ final class ErrorFormatterTest extends TestCase
     {
         $formatter = new GenericErrorFormatter($debug);
 
-        $data = $formatter->format($exception);
+        $data = $formatter->format($exception)->data;
 
         $this->assertIsArray($data);
         $this->assertArrayHasKey('message', $data);
@@ -39,7 +39,7 @@ final class ErrorFormatterTest extends TestCase
     {
         $formatter = new Rfc7807ErrorFormatter($debug);
 
-        $data = $formatter->format($exception);
+        $data = $formatter->format($exception)->data;
 
         $this->assertIsArray($data);
         $this->assertArrayHasKey('type', $data);

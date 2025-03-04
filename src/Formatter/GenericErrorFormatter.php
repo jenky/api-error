@@ -7,9 +7,6 @@ namespace Jenky\ApiError\Formatter;
 use Jenky\ApiError\GenericProblem;
 use Jenky\ApiError\Problem;
 
-/**
- * @extends AbstractErrorFormatter<string>
- */
 final class GenericErrorFormatter extends AbstractErrorFormatter
 {
     protected function createProblem(\Throwable $exception): Problem

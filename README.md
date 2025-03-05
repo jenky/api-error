@@ -126,7 +126,7 @@ If you discover any security related issues, please email contact@lynh.me instea
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
 
-[ico-version]: https://img.shields.io/packagist/v/jenky/api-error.svg?style=for-the-badge
+[ico-version]: https://img.shields.io/packagist/v/jenky/api-error.svg?logo=packagist&style=for-the-badge
 [ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=for-the-badge
 [ico-gh-actions]: https://img.shields.io/github/actions/workflow/status/jenky/api-error/testing.yml?branch=main&label=actions&logo=github&style=for-the-badge
 [ico-codecov]: https://img.shields.io/codecov/c/github/jenky/api-error?logo=codecov&style=for-the-badge

@@ -9,6 +9,12 @@ use Jenky\ApiError\Problem;
 
 final class GenericErrorFormatter extends AbstractErrorFormatter
 {
+    private array $format = [
+        'message' => '{title}',
+        'status' => '{status_code}',
+        'code' => '{code}',
+    ];
+
     protected function createProblem(\Throwable $exception): Problem
     {
         return GenericProblem::createFromThrowable($exception);
@@ -16,16 +22,20 @@ final class GenericErrorFormatter extends AbstractErrorFormatter
 
     protected function getFormat(): array
     {
-        $format = [
-            'message' => '{title}',
-            'status' => '{status_code}',
-            'code' => '{code}',
-        ];
+        $format = $this->format;
 
         if ($this->debug) {
             $format['debug'] = '{debug}';
         }
 
         return $format;
+    }
+
+    /**
+     * @param  array<string, mixed> $format
+     */
+    public function setFormat(array $format): void
+    {
+        $this->format = $format;
     }
 }

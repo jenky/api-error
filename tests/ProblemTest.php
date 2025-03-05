@@ -100,4 +100,19 @@ final class ProblemTest extends TestCase
             ],
         ];
     }
+
+    public function test_rfc7807_setters(): void
+    {
+        $problem = Rfc7807Problem::createFromThrowable(new \RuntimeException('foo'));
+
+        $this->expectException(\InvalidArgumentException::class);
+
+        $problem->setType('bar');
+
+        $problem->addInvalidParam('foo', 'bar');
+        $context = $problem->context();
+
+        $this->assertArrayHasKey('invalid_params', $context);
+        $this->assertEquals($context['invalid_params']['foo'], 'bar');
+    }
 }

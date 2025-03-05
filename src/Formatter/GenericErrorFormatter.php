@@ -9,6 +9,9 @@ use Jenky\ApiError\Problem;
 
 final class GenericErrorFormatter extends AbstractErrorFormatter
 {
+    /**
+     * @var array<string, mixed>
+     */
     private array $format = [
         'message' => '{title}',
         'status' => '{status_code}',

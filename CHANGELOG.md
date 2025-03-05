@@ -20,3 +20,10 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ### Security
 - Nothing -->
+## 0.2.0 - 2025-03-05
+
+### Added
+
+- Add `setFormat` to `GenericErrorFormatter` to create error formatter using custom format.
+
+**Full Changelog**: https://github.com/jenky/api-error/compare/0.1.0...0.2.0

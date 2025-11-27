@@ -20,6 +20,10 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ### Security
 - Nothing -->
+## 0.3.0 - 2025-11-27
+
+**Full Changelog**: https://github.com/jenky/api-error/compare/0.2.0...0.3.0
+
 ## 0.2.0 - 2025-03-05
 
 ### Added
